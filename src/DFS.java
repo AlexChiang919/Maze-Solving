@@ -32,7 +32,7 @@ public class DFS {
 			fill(dis, 100000);
 			for (int i = 0; i < rsiz; i++)
 				maze[i] = scan.nextLine().toCharArray();
-			Stack<Integer> stack = new Stack<>();
+			Stack<Integer> stack = new Stack<Integer>();
 			boolean[][] visited = new boolean[rsiz][csiz];
 			for (boolean[] b : visited)
 				Arrays.fill(b, false);
@@ -68,7 +68,7 @@ public class DFS {
 			if (!solvable)
 				printLine("Not solvable!");
 			else {
-				Queue<Integer> qu = new LinkedList<>();
+				Queue<Integer> qu = new LinkedList<Integer>();
 				qu.add(er);
 				qu.add(ec);
 				while (!qu.isEmpty()) {

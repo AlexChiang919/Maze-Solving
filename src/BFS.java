@@ -30,7 +30,7 @@ public class BFS {
 			fill(dis, 100000);
 			for (int i = 0; i < rsiz; i++)
 				maze[i] = scan.nextLine().toCharArray();
-			Queue<Integer> q = new LinkedList<>();
+			Queue<Integer> q = new LinkedList<Integer>();
 			int[] start = getPosition(maze, 'o');
 			dis[start[0]][start[1]] = -1;
 			q.add(start[0]);
@@ -63,7 +63,7 @@ public class BFS {
 			if (!solvable)
 				printLine("Not solvable!");
 			else {
-				Queue<Integer> qu = new LinkedList<>();
+				Queue<Integer> qu = new LinkedList<Integer>();
 				qu.add(er);
 				qu.add(ec);
 				while (!qu.isEmpty()) {
