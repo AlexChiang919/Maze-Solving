@@ -9,7 +9,7 @@ import java.util.Scanner;
 public class HexagonBFS {
 
 	private static final String PROBLEM = "prob18";
-	private static final String EXT = "-1-in.txt";
+	private static final String EXT = "-3-in.txt";
 
 	public static final int[][] D = { {-1, -1, 0, 0, 1, 1}, {-1, 1, -1, 1, -1, 1} };
 	
@@ -79,7 +79,6 @@ public class HexagonBFS {
 				if (!inBounds(maze, rr, cc) || maze[rr][cc] == ' ')
 					continue;
 				int[] nu = getDirection(D[0][i], D[1][i]);
-				//printLine(r + " " + c + " " + D[0][i] + " " + D[1][i] + " " + nu[0] + " " + nu[1]);
 				if (dis[r][c] + 1 < dis[r + nu[0]][c + nu[1]]) {
 					dis[r + nu[0]][c + nu[1]] = dis[r][c] + 1;
 					q.add(r + nu[0]);

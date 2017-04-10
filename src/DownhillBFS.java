@@ -27,8 +27,12 @@ public class DownhillBFS {
 			int rsiz = Integer.parseInt(split[0]);
 			int csiz = Integer.parseInt(split[1]);
 			char[][] maze = new char[rsiz][csiz];
-			for (int i = 0; i < rsiz; i++)
-				maze[i] = scan.nextLine().toCharArray();
+			String[] splitt;
+			for (int i = 0; i < rsiz; i++) {
+				splitt = scan.nextLine().split(" ");
+				for (int j = 0; j < csiz; j++)
+					maze[i][j] = splitt[j].charAt(0);
+			}
 			int[] s = getPosition(maze, 'S');
 			bfs(maze, s[0], s[1]);
 			printArray(maze);
@@ -42,6 +46,11 @@ public class DownhillBFS {
 			for (int c = 0; c < vis[r].length; c++)
 				if (maze[r][c] != 'X' && maze[r][c] != 'S')
 					vis[r][c] = Integer.parseInt("" + maze[r][c]);
+				else if (maze[r][c] == 'X')
+					vis[r][c] = 0;
+				else if (maze[r][c] == 'S')
+					vis[r][c] = 9;
+					
 		Queue<Integer> q = new LinkedList<Integer>();
 		int[][] dis = new int[maze.length][maze[0].length];
 		fill(dis, 10000000);
@@ -64,7 +73,7 @@ public class DownhillBFS {
 				int cc = c + d[1][i];
 				if (!inBounds(maze, rr, cc) || vis[rr][cc] > vis[r][c])
 					continue;
-				if (dis[r][c] + 1 < dis[rr][cc]) {
+				if (dis[r][c] + 1 < dis[rr][cc] && vis[rr][cc] <= vis[r][c]) {
 					dis[rr][cc] = dis[r][c] + 1;
 					q.add(rr);
 					q.add(cc);
@@ -82,28 +91,35 @@ public class DownhillBFS {
 		q.add(er);
 		q.add(ec);
 		List<Integer> used = new ArrayList<Integer>();
+		boolean end = false;
 		while (!q.isEmpty()) {
 			int r = q.poll();
 			int c = q.poll();
-			if (maze[r][c] == 'S')
+			if (end)
 				break;
 			for (int i = 0; i < 4; i++) {
 				int rr = r + d[0][i];
 				int cc = c + d[1][i];
-				if (!inBounds(maze, rr, cc))
+				if (!inBounds(maze, rr, cc) || used.contains(dis[rr][cc]))
 					continue;
-				if (dis[rr][cc] == dis[r][c] + 1 && !used.contains(dis[rr][cc])) {
+				if (dis[rr][cc] == dis[r][c] - 1) {
+					if (maze[rr][cc] == 'S') {
+						end = true;
+						break;
+					}
 					used.add(dis[rr][cc]);
 					maze[rr][cc] = '.';
 					q.add(rr);
 					q.add(cc);
 				}
+				if (end)
+					break;
 			}
 		}
 		for (int r = 0; r < maze.length; r++) {
 			for (int c = 0; c < maze[r].length; c++) {
-				if (maze[r][c] != 'S' && maze[r][c] != 'X' && maze[r][c] != '.')
-					maze[r][c] = '#';
+				if (!(maze[r][c] == 'S' || maze[r][c] == 'X' || maze[r][c] == '.'))
+					;//maze[r][c] = '#';
 			}
 		}
 	}
@@ -129,7 +145,7 @@ public class DownhillBFS {
 	public static void printArray(char[][] obj) {
 		for (char[] ob : obj) {
 			for (char o : ob)
-				print(o);
+				print(o + " ");
 			printLine();
 		}
 	}
