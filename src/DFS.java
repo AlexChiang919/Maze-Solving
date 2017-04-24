@@ -48,7 +48,6 @@ public class DFS {
 				int r = stack.pop();
 				if (maze[r][c] == '?') {
 					solvable = true;
-					printLine("Shortest distance: " + (dis[r][c] + 1));
 					er = r;
 					ec = c;
 				}
@@ -68,6 +67,7 @@ public class DFS {
 			if (!solvable)
 				printLine("Not solvable!");
 			else {
+				printLine("Shortest distance: " + (dis[er][ec] + 1));
 				Queue<Integer> qu = new LinkedList<Integer>();
 				qu.add(er);
 				qu.add(ec);
